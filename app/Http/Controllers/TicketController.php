@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreticketRequest;
-use App\Http\Requests\UpdateticketRequest;
-use App\Models\ticket;
+use App\Models\Ticket;
+use App\Repository\TicketRepository;
+use App\Http\Requests\StoreTicketRequest;
+use App\Http\Requests\UpdateTicketRequest;
 
 class TicketController extends Controller
 {
+
+    private TicketRepository $TicketRepository;
+
+    public function __construct(TicketRepository $TicketRepository)
+    {
+        $this->ticket = $TicketRepository;
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +24,9 @@ class TicketController extends Controller
      */
     public function index()
     {
-        //
+        $tickets = $this->ticket->get();
+
+        return view('index', ['tickets' => $tickets]);
     }
 
     /**
@@ -25,7 +36,7 @@ class TicketController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -42,21 +53,23 @@ class TicketController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ticket  $ticket
+     * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function show(ticket $ticket)
+    public function show(int $id)
     {
-        //
+        $ticket = $this->ticket->show($id);
+
+        return view('show', ['ticket' => $ticket]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ticket  $ticket
+     * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function edit(ticket $ticket)
+    public function edit(Ticket $ticket)
     {
         //
     }
@@ -64,11 +77,11 @@ class TicketController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateticketRequest  $request
-     * @param  \App\Models\ticket  $ticket
+     * @param  \App\Http\Requests\UpdateTicketRequest  $request
+     * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateticketRequest $request, ticket $ticket)
+    public function update(UpdateTicketRequest $request, Ticket $ticket)
     {
         //
     }
@@ -76,10 +89,10 @@ class TicketController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ticket  $ticket
+     * @param  \App\Models\Ticket  $ticket
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ticket $ticket)
+    public function destroy(Ticket $ticket)
     {
         //
     }

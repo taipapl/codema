@@ -15,7 +15,7 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->id();
-            $table->integer('topic');
+            $table->integer('topic_id');
             $table->string('email');
             $table->text('text');
             $table->string('file')->nullable();

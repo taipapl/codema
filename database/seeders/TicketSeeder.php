@@ -24,7 +24,7 @@ class TicketSeeder extends Seeder
         for ($i = 0; $i < 10; $i++) {
 
             DB::table('tickets')->insert([
-                'topic' => $faker->numberBetween(1, 3),
+                'topic_id' => $faker->numberBetween(1, 3),
                 'email' => $faker->email(),
                 'text' => $faker->text(400),
                 'created_at' => Carbon::now(),

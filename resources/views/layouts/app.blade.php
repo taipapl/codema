@@ -36,10 +36,12 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">@lang('Home')</a>
+                                    <a class="nav-link  {{ Route::is('home') ? 'active' : null }}" aria-current="page"
+                                        href="{{ route('home') }}">@lang('Home')</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">@lang('List')</a>
+                                    <a class="nav-link {{ Route::is('list') ? 'active' : null }}"
+                                        href="{{ route('list') }}">@lang('List')</a>
                                 </li>
 
                             </ul>
@@ -86,7 +88,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                             document.getElementById('logout-form').submit();">
+                                                                                                         document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
