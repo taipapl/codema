@@ -31,7 +31,7 @@
 
                                 <tr>
                                     <td>{{ $ticket->id }}</td>
-                                    <td>{{ $ticket->topic_id }}</td>
+                                    <td>{{ $ticket->topic->name }}</td>
                                     <td>{{ $ticket->email }}</td>
                                     <td>{{ $ticket->created_at }}</td>
                                     <td>{{ $ticket->file }}</td>

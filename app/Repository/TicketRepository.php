@@ -18,7 +18,7 @@ class TicketRepository
 
     public function get()
     {
-        return $this->ticket->paginate(5);
+        return $this->ticket->with('topic')->paginate(5);
     }
 
     public function show(int $id)

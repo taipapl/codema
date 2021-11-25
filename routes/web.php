@@ -23,3 +23,5 @@ Auth::routes();
 Route::get('/home', [TicketController::class, 'create'])->name('home');
 Route::get('/list', [TicketController::class, 'index'])->name('list');
 Route::get('list/{id}', [TicketController::class, 'show'])->where(['id' => '[0-9]+'])->name('show');
+
+Route::post('/store', [TicketController::class, 'store'])->name('store');
