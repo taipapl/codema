@@ -28,7 +28,16 @@ class StoreTicketRequest extends FormRequest
             'email' => 'required|email',
             'text' => 'required',
             'topic' => 'required',
-            'file' => 'file|image|max:2000'
+            'file' => 'file|image|max:2024',
+            'g-recaptcha-response' => 'required|recaptcha'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'g-recaptcha-response.recaptcha' => 'Captcha verification failed',
+            'g-recaptcha-response.required' => 'Please complete the captcha'
         ];
     }
 }

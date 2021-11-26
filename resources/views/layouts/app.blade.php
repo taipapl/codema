@@ -39,11 +39,12 @@
                                     <a class="nav-link  {{ Route::is('home') ? 'active' : null }}" aria-current="page"
                                         href="{{ route('home') }}">@lang('Home')</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {{ Route::is('list') ? 'active' : null }}"
-                                        href="{{ route('list') }}">@lang('List')</a>
-                                </li>
-
+                                @can('role', 1)
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ Route::is('list') ? 'active' : null }}"
+                                            href="{{ route('list') }}">@lang('List')</a>
+                                    </li>
+                                @endcan
                             </ul>
 
                         </div>
@@ -88,7 +89,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                                         document.getElementById('logout-form').submit();">
+                                                                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

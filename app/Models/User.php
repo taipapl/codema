@@ -41,4 +41,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function role(): int
+    {
+        return (int) $this->role;
+    }
+
+
+    public function getRoleNameAttribute(): string
+    {
+        // to powinno być w osobnej tabeli ale to juz tak na szybko
+        $role = $this->role;
+
+        switch ($role) {
+            case 1:
+                return __('Admin');
+                break;
+            case 0:
+            default:
+                return __('Client');
+                break;
+        }
+    }
 }

@@ -5,12 +5,14 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }} {{ __('You are logged in!') }}</div>
+                    <div class="card-header">{{ __('Dashboard') }} {{ __('You are logged in!') }}
+                        @lang('You role is: ') {{ Auth::user()->role_name }}
+                    </div>
 
                     <div class="card-body">
 
 
-                        <h3 class="green">@lang('Add a ticket')</h3>
+                        <h3 class="text-success">@lang('Add a ticket')</h3>
 
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
@@ -66,12 +68,23 @@
 
                                         </div>
 
+                                        @if (config('services.recaptcha.key'))
+                                            <div class="g-recaptcha  @error('g-recaptcha-response') is-invalid @enderror"
+                                                data-sitekey="{{ config('services.recaptcha.key') }}">
+                                            </div>
+                                            @error('g-recaptcha-response')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                            <script src='https://www.google.com/recaptcha/api.js'></script>
+                                        @endif
+
+
 
                                     </div>
                                     <div class="col">
                                         <div class="form-group">
-                                            <textarea class="form-control  @error('email') is-invalid @enderror" id="text"
-                                                name="text" rows="3"></textarea>
+                                            <textarea class="form-control  @error('text') is-invalid @enderror" id="text"
+                                                name="text" rows="3">{{ old('text') }}</textarea>
 
                                             @error('text')
                                                 <div class="invalid-feedback">{{ $message }}</div>

@@ -2,11 +2,12 @@
 
 namespace App\Repository;
 
-use Throwable;
+use App\Models\User;
 use App\Models\Topic;
-use App\Models\Ticket;
 
+use App\Models\Ticket;
 use App\Mail\TicketShipped;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\StoreTicketRequest;
@@ -43,7 +44,7 @@ class TicketRepository
         if ($request->file) {
             $fileName = time() . '_' . $request->file->getClientOriginalName();
             $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
-            $$dbFile = '/storage/' . $filePath;
+            $dbFile = '/storage/' . $filePath;
         }
 
         $ticket = Ticket::create([
@@ -58,8 +59,15 @@ class TicketRepository
 
     public function send($ticket)
     {
-        $email = config('mail.from.address');
+        $admin_emails = $this->getAdminEmails();
 
-        Mail::to($email)->send(new TicketShipped($ticket));
+        Mail::to($admin_emails)->send(new TicketShipped($ticket));
+    }
+
+    private function getAdminEmails()
+    {
+        $users = User::select('email')->where('role', 1)->get()->toArray();
+
+        return  Arr::pluck($users, 'email');
     }
 }

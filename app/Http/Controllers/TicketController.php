@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Ticket;
 use App\Repository\TicketRepository;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\StoreTicketRequest;
-use App\Http\Requests\UpdateTicketRequest;
 
 class TicketController extends Controller
 {
@@ -24,6 +24,11 @@ class TicketController extends Controller
      */
     public function index()
     {
+
+        if (Gate::denies('role') == 1) {
+            abort(403);
+        }
+
         $tickets = $this->ticket->get();
 
         return view('index', ['tickets' => $tickets]);
@@ -69,39 +74,5 @@ class TicketController extends Controller
         $ticket = $this->ticket->show($id);
 
         return view('show', ['ticket' => $ticket]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Ticket  $ticket
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ticket $ticket)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateTicketRequest  $request
-     * @param  \App\Models\Ticket  $ticket
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateTicketRequest $request, Ticket $ticket)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Ticket  $ticket
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Ticket $ticket)
-    {
-        //
     }
 }

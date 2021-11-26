@@ -5,7 +5,8 @@
         <div class="ticket justify-content-center">
             <div class="">
                 <div class="card">
-                    <div class="card-header">{{ __('Dashboard') }} {{ __('You are logged in!') }}</div>
+                    <div class="card-header">{{ __('Dashboard') }} {{ __('You are logged in!') }}
+                        {{ Auth::user()->roleName }} </div>
 
                     <div class="card-body">
 
