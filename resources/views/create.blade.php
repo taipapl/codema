@@ -12,6 +12,12 @@
 
                         <h3 class="green">@lang('Add a ticket')</h3>
 
+                        @if (session('status'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
                         <form method="post" action="{{ route('store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="container">
@@ -21,21 +27,24 @@
 
                                         <div class="form-group">
 
-                                            <select class="form-control" id="exampleFormControlSelect1">
-                                                <option>@lang("Choose a topic")</option>
-                                                <option>1</option>
-                                                <option>2</option>
-                                                <option>3</option>
-                                                <option>4</option>
-                                                <option>5</option>
+                                            <select class="form-control  @error('topic') is-invalid @enderror" id="topic"
+                                                name="topic">
+                                                <option value="">@lang("Choose a topic")</option>
+                                                @foreach ($topic as $top)
+                                                    <option value="{{ $top->id }}" @if (old('topic') == $top->id) selected="selected" @endif>
+                                                        {{ $top->name }}</option>
+                                                @endforeach
                                             </select>
+                                            @error('topic')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
 
                                         <div class="mb-3">
 
-                                            <input type="email" value="{{ old('email') }}"
-                                                class="form-control @error('email') is-invalid @enderror "
-                                                id="exampleFormControlInput1" placeholder="name@example.com">
+                                            <input type="email" name="email" value="{{ old('email') }}"
+                                                class="form-control @error('email') is-invalid @enderror " id="email"
+                                                placeholder="name@example.com">
                                             @error('email')
                                                 <div class="invalid-feedback">{{ $message }}</div>
                                             @enderror
@@ -43,15 +52,18 @@
                                         </div>
 
 
-                                        <div class="input-group mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                                            </div>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="file"
-                                                    aria-describedby="inputGroupFileAddon01">
-                                                <label class="custom-file-label" for="file">Choose file</label>
-                                            </div>
+
+                                        <div class="custom-file mb-3">
+                                            <input type="file"
+                                                class="custom-file-input  @error('file') is-invalid @enderror" id="file"
+                                                name="file">
+                                            <label class="custom-file-label" for="file">@lang('Choose file...') </label>
+                                            @error('file')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+
+
+
                                         </div>
 
 
@@ -75,11 +87,7 @@
                             </div>
                         </form>
 
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
+
 
 
                     </div>

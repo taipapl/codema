@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateTicketRequest;
 class TicketController extends Controller
 {
 
-    private TicketRepository $TicketRepository;
+    private TicketRepository $ticket;
 
     public function __construct(TicketRepository $TicketRepository)
     {
@@ -36,7 +36,9 @@ class TicketController extends Controller
      */
     public function create()
     {
-        return view('create');
+        $topic = $this->ticket->getTopic();
+
+        return view('create', ['topic' => $topic]);
     }
 
     /**
@@ -47,7 +49,13 @@ class TicketController extends Controller
      */
     public function store(StoreticketRequest $request)
     {
-        //
+        $ticket = $this->ticket->store($request);
+
+        $this->ticket->send($ticket);
+
+        $mess = ($ticket) ? __('Record was added') : __('Record was no added');
+
+        return redirect()->route('home')->with('status', $mess);
     }
 
     /**

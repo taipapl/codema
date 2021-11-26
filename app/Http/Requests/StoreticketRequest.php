@@ -27,6 +27,8 @@ class StoreTicketRequest extends FormRequest
         return [
             'email' => 'required|email',
             'text' => 'required',
+            'topic' => 'required',
+            'file' => 'file|image|max:2000'
         ];
     }
 }
