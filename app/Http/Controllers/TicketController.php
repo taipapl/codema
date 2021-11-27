@@ -71,6 +71,11 @@ class TicketController extends Controller
      */
     public function show(int $id)
     {
+
+        if (Gate::denies('role') == 1) {
+            abort(403);
+        }
+
         $ticket = $this->ticket->show($id);
 
         return view('show', ['ticket' => $ticket]);

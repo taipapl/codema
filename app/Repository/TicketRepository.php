@@ -29,7 +29,7 @@ class TicketRepository
 
     public function show(int $id)
     {
-        return  $this->ticket->where('id', $id)->first();
+        return  $this->ticket->findOrFail($id);
     }
 
     public function getTopic()
