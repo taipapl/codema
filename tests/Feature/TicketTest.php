@@ -96,4 +96,21 @@ class TicketTest extends TestCase
         $user->delete();
         $tickiet->delete();
     }
+
+
+    public function test_valid_form()
+    {
+
+        $user = User::factory(['role' => 0])->create();
+
+        $response = $this->actingAs($user)
+            ->withSession(['banned' => false])
+            ->get('/home');
+
+
+        $response = $this->post('/store', [])
+            ->assertSessionHasErrors('email')
+            ->assertSessionHasErrors('text')
+            ->assertSessionHasErrors('topic');
+    }
 }
