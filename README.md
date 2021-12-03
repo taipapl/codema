@@ -1,2 +1,2 @@
-# codema
+# someCompany
 Recruitment project
