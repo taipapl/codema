@@ -1,2 +1,2 @@
 # someCompany
-Recruitment project
+Recruitment project - create ticket
